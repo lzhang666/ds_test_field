@@ -9,7 +9,7 @@ ELECTION_TIMEOUT = 2.0
 
 # array of numbr of nodes spawned on tests, an example could be [3,5,7,11,...]
 # default is only 5 for faster tests
-NUM_NODES_ARRAY = [5]
+NUM_NODES_ARRAY = [9]
 
 
 # yoour `node.py` file path

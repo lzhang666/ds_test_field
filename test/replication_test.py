@@ -3,7 +3,7 @@ import pytest
 import time
 import requests
 
-NUM_NODES_ARRAY = [5]
+NUM_NODES_ARRAY = [9]
 PROGRAM_FILE_PATH = "src/node.py"
 TEST_TOPIC = "test_topic"
 TEST_MESSAGE = "Test Message"

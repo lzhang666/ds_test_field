@@ -1,10 +1,10 @@
 #!bin/bash
-for ((i=1;i<101;i++))
+for ((i=1;i<11;i++))
 do
- # pytest RRMQ-2020-Tests/test/replication_test.py | grep passed
- pytest RRMQ-2020-Tests/test/replication_test.py
+ # pytest test/replication_test.py | grep passed
+ pytest test/replication_test.py
  sleep 7
- # OUTPUT = $(pytest RRMQ-2020-Tests/test/replication_test.py) 
+ # OUTPUT = $(pytest test/replication_test.py) 
  # FAIL = $( $OUTPUT | grep passed)
  # echo $FAIL
  # if [ $FAIL ]

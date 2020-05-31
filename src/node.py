@@ -546,9 +546,10 @@ def leader_attempt_commit():
 
 
 def follower_attempt_commit():
-    global leaderCommit, commitIndex
-    update_message_queue(log_entries[leaderCommit])
-    commitIndex += 1
+    global leaderCommit, commitIndex 
+    while commitIndex < leaderCommit:
+        update_message_queue(log_entries[leaderCommit])
+        commitIndex += 1
 
 
 def update_message_queue(entry):
