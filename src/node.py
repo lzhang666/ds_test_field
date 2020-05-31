@@ -220,7 +220,7 @@ def follower_listen():
             heartbeat_reply = set_heartbeat_reply()
             # print(heartbeat_reply)
             try:
-                response = requests.post(f'http://{ip}:{leaderId}/leader_channel', json=heartbeat_reply, headers=headers)
+                response = requests.post('http://{}:{}/leader_channel'.format(ip, leaderId), json=heartbeat_reply, headers=headers)
             except Exception:
                 print('not sent2')
                 pass
@@ -236,7 +236,7 @@ def follower_listen():
             append_entries_reply = set_append_entries_reply()
             # print(append_entries_reply)
             try:
-                response = requests.post(f'http://{ip}:{leaderId}/leader_channel', json=append_entries_reply, headers=headers)
+                response = requests.post('http://{}:{}/leader_channel'.format(ip, leaderId), json=append_entries_reply, headers=headers)
             except Exception:
                 print('not sent3')
                 pass
@@ -252,7 +252,7 @@ def follower_listen():
         reply_candidate = set_reply_candidate()
         print('receive vote request from candidate {} at term {}'.format(recv['candidateId'], recv['term']))
         try:
-            vote_candidate = requests.post(f'http://{ip}:{candidateId}/candidate_channel', json=reply_candidate, headers=headers)
+            vote_candidate = requests.post('http://{}:{}/candidate_channel'.format(ip, candidateId), json=reply_candidate, headers=headers)
         except Exception:
             pass
         return jsonify({'success': True,}), 201
@@ -354,7 +354,7 @@ def leader_to_others(follower):
         append_entries = set_append_entries(follower, nextIndex[follower])
         # print(append_entries)
         try:
-            response = requests.post(f'http://{ip}:{follower}/follower_channel', json=append_entries, headers=headers)
+            response = requests.post('http://{}:{}/follower_channel'.format(ip, follower), json=append_entries, headers=headers)
             print('next index test again again', nextIndex)
         except Exception as e:
             pass
@@ -364,7 +364,7 @@ def leader_to_others(follower):
         heartbeat = set_heartbeat()
         # print(heartbeat)
         try:
-            response = requests.post(f'http://{ip}:{follower}/follower_channel', json=heartbeat, headers=headers)
+            response = requests.post('http://{}:{}/follower_channel'.format(ip, follower), json=heartbeat, headers=headers)
         except Exception as e:
             pass
 
@@ -428,7 +428,7 @@ def candidate_state():
 def candidate_to_others(vote_port):
     if not vote_count[vote_port]:
         try:
-            url = f'http://{ip}:{vote_port}/follower_channel'
+            url = 'http://{}:{}/follower_channel'.format(ip, vote_port)
             request_vote = set_request_vote()
             to_follower = requests.post(url, json=request_vote, headers=headers)
             # print(f'candidate {port} at term {current_term} sending request vote to follower {vote_port}')
@@ -573,8 +573,6 @@ def commit_wait():
     '''use in GET/PUT function to wait for previous log entry committed before query
     '''
     while True:
-        # print('commitIndex', commitIndex)
-        # print('log entries latest index', len(log_entries)-1)
         if commitIndex == len(log_entries)-1:
             break
 
